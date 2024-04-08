@@ -1,0 +1,356 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Library Management',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: LibraryHomePage(),
+    );
+  }
+}
+class LibraryTiming {
+  String day;
+  String time;
+
+  LibraryTiming({required this.day, required this.time});
+}
+class DutyStaf {
+  String day;
+  String name;
+
+  DutyStaf({required this.day, required this.name});
+}
+
+class LibraryHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Library Management'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 300,
+              height: 50,
+              child: ElevatedButton(
+                    onPressed: () {
+            // Navigate to the new window (or screen)
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => LibraryTimingsPage()),
+            );
+          },
+                child: Text('Library Timing'),
+              ),
+            ),
+          
+            SizedBox(
+              width: 300,
+              height: 50,
+              child: ElevatedButton(
+              onPressed: () {
+            // Navigate to the new window (or screen)
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DutyStafPage()),
+            );
+          },
+                child: Text('Duty of Staff'),
+              ),
+            ),
+          
+            SizedBox(
+              width: 300,
+              height: 50,
+              child: ElevatedButton(
+                    onPressed: () {
+            // Navigate to the new window (or screen)
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => StudentPage()),
+            );
+          },
+                child: Text('Student Details'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class LibraryTimingsPage extends StatefulWidget {
+  @override
+  _LibraryTimingsPageState createState() => _LibraryTimingsPageState();
+}
+
+class _LibraryTimingsPageState extends State<LibraryTimingsPage> {
+  List<LibraryTiming> libraryTimings = [
+    LibraryTiming(day: 'Monday', time: '9:00 AM - 5:00 PM'),
+    LibraryTiming(day: 'Tuesday', time: '9:00 AM - 5:00 PM'),
+    LibraryTiming(day: 'Wednesday', time: '9:00 AM - 5:00 PM'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Library Timings'),
+      ),
+      body: ListView.builder(
+        itemCount: libraryTimings.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(libraryTimings[index].day),
+            subtitle: Text(libraryTimings[index].time),
+         
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Implement add timing functionality
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              String newDay = '';
+              String newTime = '';
+              return AlertDialog(
+                title: Text('Add Timing'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Day'),
+                      onChanged: (value) {
+                        newDay = value;
+                      },
+                    ),
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Time'),
+                      onChanged: (value) {
+                        newTime = value;
+                      },
+                    ),
+                  ],
+                ),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add new timing
+                      setState(() {
+                        libraryTimings.add(LibraryTiming(day: newDay, time: newTime));
+                      });
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Add'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+
+class DutyStafPage extends StatefulWidget {
+  @override
+  _DutyStafPageState createState() => _DutyStafPageState();
+}
+
+class _DutyStafPageState extends State<DutyStafPage> {
+  List<DutyStaf> DutyStafPage = [
+    DutyStaf(day: 'Monday', name: 'Dr.aysha'),
+    DutyStaf(day: 'Tuesday', name: "Mam Sania"),
+    DutyStaf(day: 'Tuesday', name: "Dr.Ahsan"),
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Library Timings'),
+      ),
+      body: ListView.builder(
+        itemCount: DutyStafPage.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(DutyStafPage[index].day),
+            subtitle: Text(DutyStafPage[index].name),
+         
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Implement add timing functionality
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              String newDay = '';
+              String newTime = '';
+              return AlertDialog(
+                title: Text('Add Name'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Day'),
+                      onChanged: (value) {
+                        newDay = value;
+                      },
+                    ),
+                    TextField(
+                      decoration: InputDecoration(labelText: 'Name'),
+                      onChanged: (value) {
+                        newTime = value;
+                      },
+                    ),
+                  ],
+                ),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add new timing
+                      setState(() {
+                        DutyStafPage.add(DutyStaf(day: newDay, name: newTime));
+                      });
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Add'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+class StudentPage extends StatefulWidget {
+  @override
+  _LibraryTimingState createState() => _LibraryTimingState();
+}
+
+class _LibraryTimingState extends State<StudentPage> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController fatherNameController = TextEditingController();
+  final TextEditingController rollNoController = TextEditingController();
+  final TextEditingController semesterController = TextEditingController();
+  final TextEditingController programController = TextEditingController();
+  final TextEditingController facultyController = TextEditingController();
+
+  String message = '';
+
+  void createStudentDetails() {
+ 
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Success'),
+          content: Text('Your Semester Fee voucher is created successfully!'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the alert dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Student Details'),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(labelText: 'Name'),
+            ),
+            TextField(
+              controller: fatherNameController,
+              decoration: InputDecoration(labelText: 'Father\'s Name'),
+            ),
+            TextField(
+              controller: rollNoController,
+              decoration: InputDecoration(labelText: 'Roll No'),
+            ),
+            TextField(
+              controller: semesterController,
+              decoration: InputDecoration(labelText: 'Semester'),
+            ),
+            TextField(
+              controller: programController,
+              decoration: InputDecoration(labelText: 'Program'),
+            ),
+            TextField(
+              controller: facultyController,
+              decoration: InputDecoration(labelText: 'Faculty'),
+            ),
+           
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                createStudentDetails();
+              },
+              child: Text('Submit'),
+            ),
+            SizedBox(height: 20),
+            Text(
+              message,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    fatherNameController.dispose();
+    rollNoController.dispose();
+    semesterController.dispose();
+    programController.dispose();
+    facultyController.dispose();
+    super.dispose();
+  }
+}
